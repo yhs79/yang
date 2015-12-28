@@ -1,0 +1,22 @@
+<% @posts.each do |p| %>
+
+<div>
+  <h1><%=p.title%></h1>
+
+	<div class="row">
+		<div class="col-xs-6 col-md-3">
+			<a href="#" class="thumbnail">
+			<% if p.img!=nil %>
+				<img src="<%=p.img%>">
+			<% else %>
+				<img src="http://www.jirisannb.com/img/no_detail_img.gif">
+			<% end %>
+			</a>
+			<p><%=p.content%></p>
+		</div>
+	</div>
+</div>
+
+<%end%>
+      
+  

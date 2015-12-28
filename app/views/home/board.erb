@@ -1,0 +1,39 @@
+
+<% @board.each do |x| %>
+<% if x.secret=="secret" %>
+<p>비공개 방명록입니다.</p>
+<% else %>
+<p><%=x.nickname %>님의 방명록</p>
+<%= x.content %><br>
+<h6 style="float:right"><%= x.updated_at.in_time_zone(9).strftime("%Y/%m/%d \n %a %p %I:%M:%S")%></h6>
+<% x.comments.each do |c| %>
+-<%=c.comment %><br>
+<% end %>
+<% end %>
+<form action="/home/write_comment" method="POST">
+<input type="hidden" name="comment_id" value="<%=x.id%>">
+<input class="form-control" type="text" name="mycomment" placeholder="댓글 달기">
+<div class="notice">
+</div>
+<input class="btn btn-success" type="submit" value="작성" style="float:right">
+<% if x.user.email==current_user.email %>
+<a href="#"><input class="btn btn-warning" type="submit" value="수정" ></a>
+<a href="#"><input class="btn btn-warning" type="submit" value="삭제" ></a>
+<% end %> 
+</form>
+</br><br>
+<% end %>
+<br><br>
+<table class="table table-condenced">
+<tr>
+<td>
+<form action="/home/write" method="POST">
+	<input type="hidden" name="user_id" value="<%=current_user.id%>">
+	<input class="form-control" style="width:30%" type="string" name="nickname" placeholder="닉네임">  
+	<textarea class="form-control"name="content" style="width:100%" placeholder="방명록 작성"></textarea>
+	<input type="checkbox" name="secret" value="secret">비공개<br>
+	<input class="btn btn-primary" type="submit" value="작성" >
+</form>
+</td>
+</tr>
+</table>
